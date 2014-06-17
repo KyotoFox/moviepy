@@ -266,5 +266,14 @@ def ffmpeg_parse_infos(filename, print_infos=False):
             result['audio_fps'] = int(line[match.start()+1:match.end()])
         except:
             result['audio_fps'] = 'unknown'
+            
+    line_rotate = [l for l in lines if 'rotate          :' in l]
+
+    if line_rotate != []:
+        line = line_rotate[0]
+        match = re.search(": [0-9]*", line)
+        result['video_rotate'] = int(line[match.start()+2:match.end()])
+    else:
+        result['video_rotate'] = 0
 
     return result
